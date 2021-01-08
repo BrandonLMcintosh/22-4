@@ -1,0 +1,27 @@
+CREATE DATABASE craigslist;
+
+\c craigslist
+
+CREATE TABLE regions (
+    id SERIAL PRIMARY KEY,
+    region_name TEXT UNIQUE NOT NULL;
+);
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    preferred_region INTEGER REFERENCES regions NOT NULL,
+    user_name TEXT UNIQUE NOT NULL,
+    user_email TEXT UNIQUE NOT NULL,
+    user_phone TEXT UNIQUE
+);
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    user_id INTEGER REFERENCES users NOT NULL,
+    region_id INTEGER REFERENCES region NOT NULL,
+    user_location POINT,
+    category_id INTEGER REFERENCES categories NOT NULL
+);
+CREATE TABLE categories(
+    id SERIAL PRIMARY KEY,
+    category_name TEXT UNIQUE NOT NULL
+);
